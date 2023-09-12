@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as math from "mathjs";
 
 function Calculator() {
     // state
@@ -10,14 +11,24 @@ function Calculator() {
     };
 
     // Evaluate
+    // const Evaluate = () => {
+    //     try{
+    //         setResult(eval(result).toString())
+    //     }catch(error){
+    //         setResult('This error is from evaluation')
+    //     }
+    // };
     const Evaluate = () => {
-        try{
-            setResult(eval(result).toString())
-        }catch(error){
-            setResult('error from evaluation')
+        try {
+          const expression = math.compile(result);
+          const evaluatedResult = expression.evaluate();
+          setResult(evaluatedResult.toString());
+        } catch (error) {
+          setResult("This error is from evaluation");
         }
-    };
-
+      };
+    
+   
     // Delete by One
     const Delete = () => {
         setResult(result.slice(0, result.length -1))
